@@ -14,8 +14,8 @@ function Dashboard() {
     const formData = { imageUrl, videoNo, views, link };
 
     const url = isUpdateMode
-      ? `https://majeback.onrender.com/updatepost/${postId}`
-      : 'https://majeback.onrender.com/postdata';
+      ? `http://localhost:5000/updatepost/${postId}`
+      : 'http://localhost:5000/postdata';
 
     const method = isUpdateMode ? 'PUT' : 'POST';
 
@@ -47,7 +47,7 @@ function Dashboard() {
   }
 
   const fetchPostData = () => {
-    fetch('https://majeback.onrender.com/getpostdata',{
+    fetch('http://localhost:5000/getpostdata',{
       mode: 'cors',
     })
       .then(res => {
@@ -69,7 +69,7 @@ function Dashboard() {
   }, []);
 
   function handleDelete(id) {
-    fetch(`https://majeback.onrender.com/deletepost/${id}`, {
+    fetch(`http://localhost:5000/deletepost/${id}`, {
       method: "DELETE"
     })
       .then(res => {
@@ -145,7 +145,7 @@ function Dashboard() {
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-dark" data-bs-dismiss="modal">Close</button>
-              <button type="submit" className="btn btn-light">{isUpdateMode ? 'Update' : 'Add'}</button>
+              <button data-bs-dismiss="modal" type="submit" className="btn btn-light">{isUpdateMode ? 'Update' : 'Add' }</button>
             </div>
           </div>
         </form>
