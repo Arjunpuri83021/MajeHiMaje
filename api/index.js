@@ -7,13 +7,14 @@ require('dotenv').config(); // Load environment variables
 const app = express();
 
 // MongoDB connection using Mongoose
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     console.log('Database is connected');
   })
   .catch((error) => {
     console.error('Database connection error:', error);
   });
+
 
 // Apply CORS middleware before routes
 app.use(cors({
