@@ -10,7 +10,7 @@ function Home() {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch('http://localhost:5001/getpostdata', {
+    fetch('http://localhost:5000/getpostdata', {
       mode: 'cors',
     })
       .then((res) => {

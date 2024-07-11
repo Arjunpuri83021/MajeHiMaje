@@ -14,8 +14,8 @@ function Dashboard() {
     const formData = { imageUrl, videoNo, views, link };
 
     const url = isUpdateMode
-      ? `http://localhost:5001/updatepost/${postId}`
-      : 'http://localhost:5001/postdata';
+      ? `http://localhost:5000/updatepost/${postId}`
+      : 'http://localhost:5000/postdata';
 
     const method = isUpdateMode ? 'PUT' : 'POST';
 
@@ -47,7 +47,7 @@ function Dashboard() {
   }
 
   const fetchPostData = () => {
-    fetch('http://localhost:5001/getpostdata',{
+    fetch('http://localhost:5000/getpostdata',{
       mode: 'cors',
     })
       .then(res => {
@@ -69,7 +69,7 @@ function Dashboard() {
   }, []);
 
   function handleDelete(id) {
-    fetch(`http://localhost:5001/deletepost/${id}`, {
+    fetch(`http://localhost:5000/deletepost/${id}`, {
       method: "DELETE"
     })
       .then(res => {
