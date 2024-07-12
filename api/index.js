@@ -17,12 +17,21 @@ mongoose.connect(process.env.MONGODB_URI)
 
 
 // Apply CORS middleware before routes
-app.use(cors({
-  origin: ['http://localhost:3000', 'https://client-po52cy0hg-arjun-puris-projects.vercel.app', 'https://majehimaje.netlify.app', 'https://majeback.onrender.com'],
-  methods: 'GET,POST,PUT,DELETE,OPTIONS',
-  allowedHeaders: 'Content-Type,Authorization',
-  credentials: true,
-}));
+
+const allowedOrigins = ['https://majehimaje.netlify.app'];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+      if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+          callback(null, true);
+      } else {
+          callback(new Error('Not allowed by CORS'));
+      }
+  }
+};
+
+app.use(cors(corsOptions));
+
 
 
 
