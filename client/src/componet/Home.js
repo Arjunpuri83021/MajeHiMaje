@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Home() {
   const [postdata, setPostData] = useState([]);
@@ -9,8 +10,11 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
+  
+
+
   useEffect(() => {
-    fetch('http://localhost:5000/getpostdata', {
+    fetch(`${apiUrl}/getpostdata`, {
       mode: 'cors',
     })
       .then((res) => {

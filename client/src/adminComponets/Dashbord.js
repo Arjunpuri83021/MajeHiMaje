@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+const apiUrl = process.env.REACT_APP_API_URL;
 
 function Dashboard() {
   const [imageUrl, setImgUrl] = useState('');
@@ -14,8 +15,9 @@ function Dashboard() {
     const formData = { imageUrl, videoNo, views, link };
 
     const url = isUpdateMode
-      ? `http://localhost:5000/updatepost/${postId}`
-      : 'http://localhost:5000/postdata';
+      ? `${apiUrl}/updatepost/${postId}`
+      : `${apiUrl}/postdata`;
+      
 
     const method = isUpdateMode ? 'PUT' : 'POST';
 
@@ -47,7 +49,7 @@ function Dashboard() {
   }
 
   const fetchPostData = () => {
-    fetch('http://localhost:5000/getpostdata',{
+    fetch(`${apiUrl}/getpostdata`,{
       mode: 'cors',
     })
       .then(res => {
@@ -69,7 +71,7 @@ function Dashboard() {
   }, []);
 
   function handleDelete(id) {
-    fetch(`http://localhost:5000/deletepost/${id}`, {
+    fetch(`${apiUrl}/deletepost/${id}`, {
       method: "DELETE"
     })
       .then(res => {
