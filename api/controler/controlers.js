@@ -2,14 +2,15 @@ const Data = require('../model/dataModel');
 
 exports.data = async (req, res) => {
   console.log(req.body);
-  const { videoNo, views, link, imageUrl } = req.body;
+  const { videoNo, views, link, imageUrl,titel } = req.body;
 
   try {
     const record = new Data({
       imageUrl: imageUrl,
       videoNo: videoNo,
       views: views,
-      link: link
+      link: link,
+      titel:titel
     });
 
     await record.save();
@@ -45,12 +46,12 @@ exports.deletepost = async (req, res) => {
 
 exports.updatepost = async (req, res) => {
     const postId = req.params.postId;
-    const { videoNo, views, link, imageUrl } = req.body;
+    const { videoNo, views, link, imageUrl ,titel} = req.body;
   
     try {
       const updatedRecord = await Data.findByIdAndUpdate(
         postId,
-        { imageUrl, videoNo, views, link },
+        { imageUrl, videoNo, views, link ,titel},
         { new: true } // This option returns the modified document rather than the original.
       );
   

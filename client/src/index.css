@@ -193,6 +193,35 @@
     max-width: 100%; /* Ensure images resize responsively */
     height: 200px; /* Maintain aspect ratio */
   }
+ 
+  .nav-ul{
+    display: flex;
+    justify-content: space-around;
+    background-color: #202020;
+    width: 100%;
+    margin: 20px auto auto auto;
+    padding: 0px;
+    
+  }
+
+  .nav-ul li{
+    background-color: #202020;
+    color: #ffff;
+    padding: 10px;
+    text-transform: uppercase;
+  }
+
+  /* Add this to your CSS file */
+.nav-ul li {
+  color: #ffff; /* Default color */
+  transition: color 0.3s;
+}
+
+.nav-ul li.active-link {
+  color: #007bff; /* Color when the link is active */
+}
+
+  
   
   
   

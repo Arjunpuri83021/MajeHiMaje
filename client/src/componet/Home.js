@@ -8,10 +8,7 @@ function Home() {
   const [postdata, setPostData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  
-
+  const itemsPerPage = 15;
 
   useEffect(() => {
     fetch(`${apiUrl}/getpostdata`, {
@@ -24,14 +21,14 @@ function Home() {
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-        setPostData(data);
+        // Reverse the order of the posts
+        const reversedData = data.reverse();
+        setPostData(reversedData);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
-  
 
   const handleSearch = (term) => {
     setSearchTerm(term);
@@ -40,17 +37,20 @@ function Home() {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
+    window.scrollTo(0, 0); // Scroll to top when page changes
   };
 
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0); // Scroll to top when page changes
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0); // Scroll to top when page changes
     }
   };
 
@@ -93,9 +93,13 @@ function Home() {
             <Link to={items.link} key={items._id}>
               <div className="col">
                 <div className="card">
-                <img src={items.imageUrl} className="card-img-top" alt="..." />                  <div className="card-body">
-                    <h5 className="card-title">Video No: {items.videoNo}</h5>
-                    <span><i className="bi bi-eye-fill"></i> {items.views}k</span>
+                  <img src={items.imageUrl} className="card-img-top" alt="..." />
+                  <div className="card-body">
+                    <h5 className="card-title">{items.titel}</h5>
+                    <div className="d-flex justify-content-between">
+                    <span><i className="bi bi-eye-fill"></i>{items.views}k</span>
+                    <span>Video No. {items.videoNo}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -112,9 +116,7 @@ function Home() {
           <button onClick={handleNextPage} className="nav-button">Next</button>
         )}
       </div>
-
-
-      <Footer/>
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -19,7 +20,7 @@ export default function Navbar({ onSearch }) {
           <form className="d-flex" role="search">
             <div className="searchBar">
               <input
-              style={{color:"#ffff"}}
+                style={{ color: "#ffff" }}
                 value={searchQuery}
                 onChange={handleInputChange}
                 id="searchQueryInput"
@@ -36,9 +37,30 @@ export default function Navbar({ onSearch }) {
                 </svg>
               </button>
             </div>
+
+            
           </form>
+          
+         
         </div>
       </nav>
+
+
+      <ul className="nav-ul">
+            <NavLink exact to="/" activeClassName="active-link">
+              <li>All</li>
+            </NavLink>
+            <NavLink to="/stars" activeClassName="active-link">
+              <li>Stars</li>
+            </NavLink>
+            <NavLink to="/tera" activeClassName="active-link">
+              <li>TeraBox</li>
+            </NavLink>
+            <NavLink to="/channels" activeClassName="active-link">
+              <li>Channels</li>
+            </NavLink>
+          </ul>
+      
     </>
   );
 }

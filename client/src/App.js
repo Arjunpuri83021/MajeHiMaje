@@ -5,6 +5,7 @@ import Home from "./componet/Home"
 
 import Navbar from './componet/Navbar';
 import Dashbord from './adminComponets/Dashbord';
+import Channel from './componet/Channel';
 
 
 function App() {
@@ -21,9 +22,9 @@ function App() {
       
       <Route path='/' element={<Home/>}></Route>
       
-      <Route path='/admin' element={<Dashbord/>}></Route>
+      <Route path='/admin/aman' element={<Dashbord/>}></Route>
     
-     
+       <Route path='/channels' element={<Channel/>}></Route>
 
 
 
