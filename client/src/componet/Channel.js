@@ -4,7 +4,7 @@ function Channel() {
     return (
       <>
        <Navbar/>
-        <h1>hello</h1>
+        <h1>On working</h1>
       </>
     );
   }

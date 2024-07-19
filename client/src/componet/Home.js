@@ -8,7 +8,7 @@ function Home() {
   const [postdata, setPostData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+  const itemsPerPage = 16;
 
   useEffect(() => {
     fetch(`${apiUrl}/getpostdata`, {
@@ -54,9 +54,11 @@ function Home() {
     }
   };
 
-  const filteredPosts = postdata.filter((item) =>
-    item.videoNo.toString().includes(searchTerm)
-  );
+  const filteredPosts = postdata.filter((item) => {
+    const videoNoMatch = item.videoNo.toString().includes(searchTerm);
+    const titelMatch = item.titel && item.titel.toLowerCase().includes(searchTerm.toLowerCase());
+    return videoNoMatch || titelMatch;
+  });
 
   const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -94,12 +96,10 @@ function Home() {
               <div className="col">
                 <div className="card">
                   <img src={items.imageUrl} className="card-img-top" alt="..." />
+                  <p className="p-0 m-0 text-light">{items.titel}</p>
                   <div className="card-body">
-                    <h5 className="card-title">{items.titel}</h5>
-                    <div className="d-flex justify-content-between">
-                    <span><i className="bi bi-eye-fill"></i>{items.views}k</span>
-                    <span>Video No. {items.videoNo}</span>
-                    </div>
+                    <h5 className="card-title">Video No: {items.videoNo}</h5>
+                    <span><i className="bi bi-eye-fill"></i> {items.views}k</span>
                   </div>
                 </div>
               </div>

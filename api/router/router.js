@@ -34,4 +34,10 @@ router.delete('/deletepost/:id',cAPi.deletepost)
 
 router.put('/updatepost/:postId', cAPi.updatepost);
 
+
+router.post('/addStar',cAPi.addStar)
+router.get('/getstars',cAPi.getstars)
+router.put('/updateStar/:starId', cAPi.updateStar); // Update star
+router.delete('/deleteStar/:starId', cAPi.deleteStar); // Delete star
+
 module.exports = router

@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
+import AdminNav from "./AdminNav";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function Dashboard() {
@@ -6,18 +8,18 @@ function Dashboard() {
   const [videoNo, setVideoNo] = useState('');
   const [views, setViews] = useState('');
   const [link, setLink] = useState('');
-  const [titel,settitel]=useState('')
+  const [titel, settitel] = useState('');
   const [postdata, setData] = useState([]);
   const [postId, setPostId] = useState('');
   const [isUpdateMode, setIsUpdateMode] = useState(false);
-   
+  
   // Pagination states
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 15;
+  const itemsPerPage = 16;
 
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = { imageUrl, videoNo, views, link ,titel};
+    const formData = { imageUrl, videoNo, views, link, titel };
 
     const url = isUpdateMode
       ? `${apiUrl}/updatepost/${postId}`
@@ -39,12 +41,8 @@ function Dashboard() {
       .then(data => {
         if (data._id) {
           e.target.reset();
-          setImgUrl('');
-          setVideoNo('');
-          setViews('');
-          setLink('');
+          resetForm();
           fetchPostData();
-          setIsUpdateMode(false);
         }
       })
       .catch(error => {
@@ -63,10 +61,9 @@ function Dashboard() {
         return res.json();
       })
       .then(data => {
-        // Reverse the order of the posts
         const reversedData = data.reverse();
         setData(reversedData);
-        console.log(data)
+        console.log(data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -104,6 +101,7 @@ function Dashboard() {
     setVideoNo(item.videoNo);
     setViews(item.views);
     setLink(item.link);
+    settitel(item.titel);
   }
 
   const handlePageChange = (pageNumber) => {
@@ -120,6 +118,15 @@ function Dashboard() {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
+  };
+
+  const resetForm = () => {
+    setImgUrl('');
+    setVideoNo('');
+    setViews('');
+    setLink('');
+    settitel('');
+    setIsUpdateMode(false);
   };
 
   const totalPages = Math.ceil(postdata.length / itemsPerPage);
@@ -150,9 +157,20 @@ function Dashboard() {
 
   return (
     <>
-      <div className="w-50 m-auto pt-5">
-        <button className="form-control btn btn-light mt-5 d-flex justify-content-center m-auto" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Post</button>
+   
+    <AdminNav/>
+      <div className="w-50 m-auto">
+        <button
+          className="form-control btn btn-light mt-4 d-flex justify-content-center m-auto"
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          onClick={resetForm}
+        >
+          Add Post
+        </button>
       </div>
+
+      
 
       <div className="all-cards">
         <div className="row row-cols-2 row-cols-md-5 g-4">
@@ -160,12 +178,11 @@ function Dashboard() {
             <div className="col" key={item._id}>
               <div className="card">
                 <img src={item.imageUrl} className="card-img-top" alt="..." />
+                <p className="p-0 m-0 text-light">{item.titel}</p>
                 <div className="card-body d-flex justify-content-between">
                   <div>
-                    <h5 className="card-title">{item.titel}</h5>
-                    
-                    <span>Video No. {item.videoNo}</span>
-                    
+                    <h5 className="card-title">Video No: {item.videoNo}</h5>
+                    <span><i className="bi bi-eye-fill"></i>{item.views}K</span>
                   </div>
                   <div>
                     <i onClick={() => handleDelete(item._id)} style={{ color: "#ffff" }} className="bi bi-trash3" />
@@ -194,7 +211,9 @@ function Dashboard() {
         <form onSubmit={handleSubmit} className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h1 className="modal-title fs-5 text-light" id="exampleModalLabel">{isUpdateMode ? 'Update Post' : 'Add A Post'}</h1>
+              <h1 className="modal-title fs-5 text-light" id="exampleModalLabel">
+                {isUpdateMode ? 'Update Post' : 'Add A Post'}
+              </h1>
               <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
             </div>
             <div className="modal-body">

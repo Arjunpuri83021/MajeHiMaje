@@ -1,4 +1,7 @@
 const Data = require('../model/dataModel');
+const Stars = require('../model/Stars.model')
+
+
 
 exports.data = async (req, res) => {
   console.log(req.body);
@@ -65,3 +68,68 @@ exports.updatepost = async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+
+
+
+
+
+  exports.addStar = async(req,res)=>{
+    const {starUrl,starName,starLike,starImgUrl} = req.body
+    const record= await new Stars({
+      starurl:starUrl,
+      starName:starName,
+      likes:starLike,
+      starImgUrl:starImgUrl
+     })
+     await record.save()
+    //  console.log(record)
+     res.json(record)
+  }
+
+
+  exports.getstars = async(req,res)=>{
+   const record= await Stars.find()
+   res.json(record)
+  }
+
+
+  // Update a star by ID
+exports.updateStar = async (req, res) => {
+  const starId = req.params.starId;
+  const { starUrl, starName, starLike, starImgUrl } = req.body;
+
+  try {
+    const updatedStar = await Stars.findByIdAndUpdate(
+      starId,
+      { starurl: starUrl, starName, likes: starLike, starImgUrl },
+      { new: true } // This option returns the modified document rather than the original.
+    );
+
+    if (!updatedStar) {
+      return res.status(404).json({ error: 'Star not found' });
+    }
+
+    res.json(updatedStar);
+  } catch (error) {
+    console.log("Error in update star API", error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+// Delete a star by ID
+exports.deleteStar = async (req, res) => {
+  const starId = req.params.starId;
+
+  try {
+    const deletedStar = await Stars.findByIdAndDelete(starId);
+
+    if (!deletedStar) {
+      return res.status(404).json({ error: 'Star not found' });
+    }
+
+    res.json(deletedStar);
+  } catch (error) {
+    console.log("Error in delete star API", error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

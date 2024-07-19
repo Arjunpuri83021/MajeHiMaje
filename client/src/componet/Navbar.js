@@ -15,12 +15,12 @@ export default function Navbar({ onSearch }) {
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
           <a className="navbar-brand">
-            <img src="maje.png" alt="" />
+            <img src="maje.png" alt="Maje logo" />
           </a>
           <form className="d-flex" role="search">
             <div className="searchBar">
               <input
-                style={{ color: "#ffff" }}
+                style={{ color: "#fff" }}
                 value={searchQuery}
                 onChange={handleInputChange}
                 id="searchQueryInput"
@@ -37,30 +37,24 @@ export default function Navbar({ onSearch }) {
                 </svg>
               </button>
             </div>
-
-            
           </form>
-          
-         
         </div>
       </nav>
 
-
       <ul className="nav-ul">
-            <NavLink exact to="/" activeClassName="active-link">
-              <li>All</li>
-            </NavLink>
-            <NavLink to="/stars" activeClassName="active-link">
-              <li>Stars</li>
-            </NavLink>
-            <NavLink to="/tera" activeClassName="active-link">
-              <li>TeraBox</li>
-            </NavLink>
-            <NavLink to="/channels" activeClassName="active-link">
-              <li>Channels</li>
-            </NavLink>
-          </ul>
-      
+        <NavLink exact to="/" activeClassName="active-link">
+          <li>All</li>
+        </NavLink>
+        <NavLink to="/stars" activeClassName="active-link">
+          <li>Stars</li>
+        </NavLink>
+        <NavLink to="/terabox" activeClassName="active-link">
+          <li>TeraBox</li>
+        </NavLink>
+        <NavLink to="/channels" activeClassName="active-link">
+          <li>Channels</li>
+        </NavLink>
+      </ul>
     </>
   );
 }

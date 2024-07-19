@@ -204,6 +204,10 @@
     
   }
 
+  .card-body {
+    padding: 10px 0px;
+  }
+  
   .nav-ul li{
     background-color: #202020;
     color: #ffff;
@@ -212,16 +216,17 @@
   }
 
   /* Add this to your CSS file */
+/* Add this to your CSS file (e.g., styles.css) */
 .nav-ul li {
-  color: #ffff; /* Default color */
-  transition: color 0.3s;
-}
-
-.nav-ul li.active-link {
-  color: #007bff; /* Color when the link is active */
-}
-
+  display: inline;
   
+  cursor: pointer;
+}
+
+.active-link {
+  color: red !important; /* Change this to the color you want for the active link */
+}
+
   
   
   
@@ -232,6 +237,10 @@
         margin: auto;
         display: flex;
         justify-content: center;
+    }
+
+    .card{
+      height: 250px;
     }
 
     .navbar div{
@@ -252,4 +261,23 @@
       text-align: center;
       width: 100%;
     }
+
+    .card-body {
+      padding: 5px 0px;
+    }
+  
+    .card p{
+      font-size: 13px;
+    }
+  
+    .card h5{
+      font-size: 13px;
+      margin: 0px 0px 0px !important;
+    }
+  
+    .card span{
+      font-size: 13px;
+      
+    }
+  
   }
