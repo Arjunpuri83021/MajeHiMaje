@@ -10,7 +10,7 @@ function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
 
-  useEffect(() => {
+  const fetchData = () => {
     fetch(`${apiUrl}/getpostdata`, {
       mode: 'cors',
     })
@@ -28,6 +28,10 @@ function Home() {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
 
   const handleSearch = (term) => {
@@ -52,6 +56,38 @@ function Home() {
       setCurrentPage(currentPage - 1);
       window.scrollTo(0, 0); // Scroll to top when page changes
     }
+  };
+
+  const handleCardClick = (id, currentViews) => {
+    // Increment the view count on the client side for immediate feedback
+    const updatedPosts = postdata.map(item => 
+      item._id === id ? { ...item, views: currentViews + 1 } : item
+    );
+    setPostData(updatedPosts);
+
+    // Send the request to the server to update the views in the database
+    fetch(`${apiUrl}/updateviews/${id}`, {
+      method: 'POST',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ views: currentViews + 1 }),
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return res.json();
+    })
+    .then((data) => {
+      console.log('Views updated:', data);
+      // Refetch the data to ensure the latest state
+      fetchData();
+    })
+    .catch((error) => {
+      console.error('Error updating views:', error);
+    });
   };
 
   const filteredPosts = postdata.filter((item) => {
@@ -88,22 +124,22 @@ function Home() {
 
   return (
     <>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onSearch={handleSearch}/>
       <div className="all-cards">
         <div className="row row-cols-2 row-cols-md-5 g-4">
           {currentPosts.map((items) => (
-            <Link to={items.link} key={items._id}>
-              <div className="col">
+            <div className="col" key={items._id} onClick={() => handleCardClick(items._id, items.views)}>
+              <Link to={items.link}>
                 <div className="card">
                   <img src={items.imageUrl} className="card-img-top" alt="..." />
                   <p className="p-0 m-0 text-light">{items.titel}</p>
                   <div className="card-body">
                     <h5 className="card-title">Video No: {items.videoNo}</h5>
-                    <span><i className="bi bi-eye-fill"></i> {items.views}k</span>
+                    <span><i className="bi bi-eye-fill"></i> {items.views}</span>
                   </div>
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

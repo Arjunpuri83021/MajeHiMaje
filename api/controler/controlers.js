@@ -1,6 +1,6 @@
 const Data = require('../model/dataModel');
 const Stars = require('../model/Stars.model')
-
+const ViewsModel=require('../model/views.model')
 
 
 exports.data = async (req, res) => {
@@ -130,6 +130,22 @@ exports.deleteStar = async (req, res) => {
     res.json(deletedStar);
   } catch (error) {
     console.log("Error in delete star API", error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+exports.updateviews = async (req, res) => {
+  const { id } = req.params;
+  const { views } = req.body;
+
+  try {
+    const updatedPost = await Data.findByIdAndUpdate(id, { views }, { new: true });
+    if (!updatedPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    res.json(updatedPost);
+  } catch (error) {
+    console.log("Error in update views API", error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
