@@ -5,7 +5,8 @@ const mongoSchema=mongoose.Schema({
     titel:String,
     videoNo:String,
     views:Number,
-    link:String
+    link:String,
+    minutes:String
 })
 
 

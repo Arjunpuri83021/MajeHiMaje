@@ -41,6 +41,10 @@ export default function Navbar({ onSearch }) {
         </div>
       </nav>
 
+
+
+
+
       <ul className="nav-ul">
         <NavLink exact to="/" activeClassName="active-link">
           <li>All</li>
@@ -48,11 +52,11 @@ export default function Navbar({ onSearch }) {
         <NavLink to="/stars" activeClassName="active-link">
           <li>Stars</li>
         </NavLink>
-        <NavLink to="/terabox" activeClassName="active-link">
-          <li>TeraBox</li>
+        <NavLink to="https://shallowgift.com/bH3FV.0NP/3RpGvabgmwVnJ/ZaD/0E1WN/Dsc/zANOT_A/w-LxTIUR0/Npz/Mv1/MBD/EN" activeClassName="active-link">
+          <li>Indians</li>
         </NavLink>
-        <NavLink to="/channels" activeClassName="active-link">
-          <li>Channels</li>
+        <NavLink to="https://shallowgift.com/bH3FV.0NP/3RpGvabgmwVnJ/ZaD/0E1WN/Dsc/zANOT_A/w-LxTIUR0/Npz/Mv1/MBD/EN" activeClassName="active-link">
+          <li>Hijabi</li>
         </NavLink>
       </ul>
     </>

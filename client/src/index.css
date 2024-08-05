@@ -85,6 +85,12 @@
 
 }
 
+.views{
+  background-color: #000;
+  opacity: 60%;
+  border-radius: 7px;
+}
+
 
   #searchQuerySubmit:hover {
     cursor: pointer;
@@ -240,7 +246,7 @@
     }
 
     .card{
-      height: 250px;
+     
     }
 
     .navbar div{
@@ -249,7 +255,7 @@
     }
 
     .card img{
-      height: 150px;
+      height: 250px;
     }
 
     

@@ -9,6 +9,9 @@ function Dashboard() {
   const [views, setViews] = useState('');
   const [link, setLink] = useState('');
   const [titel, settitel] = useState('');
+  const [minutes,setMinutes] = useState('')
+
+
   const [postdata, setData] = useState([]);
   const [postId, setPostId] = useState('');
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -19,7 +22,7 @@ function Dashboard() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = { imageUrl, videoNo, views, link, titel };
+    const formData = { imageUrl, videoNo, views, link, titel,minutes };
 
     const url = isUpdateMode
       ? `${apiUrl}/updatepost/${postId}`
@@ -102,6 +105,7 @@ function Dashboard() {
     setViews(item.views);
     setLink(item.link);
     settitel(item.titel);
+    setMinutes(item.minutes)
   }
 
   const handlePageChange = (pageNumber) => {
@@ -126,6 +130,7 @@ function Dashboard() {
     setViews('');
     setLink('');
     settitel('');
+    setMinutes('')
     setIsUpdateMode(false);
   };
 
@@ -225,6 +230,9 @@ function Dashboard() {
               <input value={videoNo} onChange={(e) => setVideoNo(e.target.value)} className="form-control" type="number" id="videoNo" name="videoNo" />
               <label htmlFor="views">Views</label>
               <input value={views} onChange={(e) => setViews(e.target.value)} className="form-control" type="number" id="views" name="views" />
+              <label htmlFor="views">Minutes</label>
+              <input value={minutes} onChange={(e) => setMinutes(e.target.value)} className="form-control" type="number" id="minutes" name="minutes" />
+             
               <label htmlFor="link">Video Link</label>
               <input value={link} onChange={(e) => setLink(e.target.value)} className="form-control" type="text" id="link" name="link" />
             </div>
