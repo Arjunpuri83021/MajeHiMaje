@@ -109,11 +109,11 @@ function Starts() {
 
   return (
     <>
-    <HilltopAdsBanner/>
+    <HilltopAdsBanner/> 
       <Navbar onSearch={handleSearch} />
       {/* <iframe src="//a.magsrv.com/iframe.php?idzone=5371288&size=300x250" width="200" height="120" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe> */}
      
-     <VideoSliderAd/>
+    <VideoSliderAd/> 
      
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-2 row-cols-md-5 g-4">

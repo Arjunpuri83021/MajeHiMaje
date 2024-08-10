@@ -10,7 +10,7 @@ function Dashboard() {
   const [link, setLink] = useState('');
   const [titel, settitel] = useState('');
   const [minutes,setMinutes] = useState('')
-
+  const [Category,setCategory]=useState('')
 
   const [postdata, setData] = useState([]);
   const [postId, setPostId] = useState('');
@@ -22,7 +22,7 @@ function Dashboard() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = { imageUrl, videoNo, views, link, titel,minutes };
+    const formData = { imageUrl, videoNo, views, link, titel,minutes,Category};
 
     const url = isUpdateMode
       ? `${apiUrl}/updatepost/${postId}`
@@ -228,13 +228,19 @@ function Dashboard() {
               <input value={titel} onChange={(e) => settitel(e.target.value)} className="form-control" type="text" name="imageUrl" id="image" />
               <label htmlFor="videoNo">Video No.</label>
               <input value={videoNo} onChange={(e) => setVideoNo(e.target.value)} className="form-control" type="number" id="videoNo" name="videoNo" />
-              <label htmlFor="views">Views</label>
-              <input value={views} onChange={(e) => setViews(e.target.value)} className="form-control" type="number" id="views" name="views" />
               <label htmlFor="views">Minutes</label>
               <input value={minutes} onChange={(e) => setMinutes(e.target.value)} className="form-control" type="number" id="minutes" name="minutes" />
              
               <label htmlFor="link">Video Link</label>
               <input value={link} onChange={(e) => setLink(e.target.value)} className="form-control" type="text" id="link" name="link" />
+
+              <label htmlFor="">Category</label>
+              <select className="form-control" name="" id="" value={Category} onChange={(e)=>{setCategory(e.target.value)}}>
+                <option className="text-light" value="english">English</option>
+                <option className="text-light" value="indian">Indian</option>
+                <option className="text-light" value="hijabi">Hijabi</option>
+                <option className="text-light" value="viral">Viral</option>
+              </select>
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-dark" data-bs-dismiss="modal">Close</button>

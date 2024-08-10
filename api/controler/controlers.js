@@ -4,7 +4,7 @@ const Stars = require('../model/Stars.model')
 
 exports.data = async (req, res) => {
   console.log(req.body);
-  const { videoNo, views, link, imageUrl,titel,minutes } = req.body;
+  const { videoNo, views, link, imageUrl,titel,minutes,Category } = req.body;
 
   try {
     const record = new Data({
@@ -13,7 +13,8 @@ exports.data = async (req, res) => {
       views: views,
       link: link,
       titel:titel,
-      minutes:minutes
+      minutes:minutes,
+      Category:Category
     });
 
     await record.save();
@@ -49,12 +50,12 @@ exports.deletepost = async (req, res) => {
 
 exports.updatepost = async (req, res) => {
     const postId = req.params.postId;
-    const { videoNo, views, link, imageUrl ,titel,minutes} = req.body;
+    const { videoNo, views, link, imageUrl ,titel,minutes,Category} = req.body;
   
     try {
       const updatedRecord = await Data.findByIdAndUpdate(
         postId,
-        { imageUrl, videoNo, views, link ,titel,minutes},
+        { imageUrl, videoNo, views, link ,titel,minutes,Category},
         { new: true } // This option returns the modified document rather than the original.
       );
   
@@ -149,3 +150,15 @@ exports.updateviews = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+
+exports.getindians = async(req,res)=>{
+   const record=await Data.find({Category:'indian'})
+   res.json(record)
+}
+
+
+exports.getHijabi = async(req,res)=>{
+  const record=await Data.find({Category:'hijabi'})
+  res.json(record)
+}

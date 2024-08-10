@@ -1,20 +1,19 @@
-import { Link } from "react-router-dom";
-import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
-import Footer from "./Footer";
+import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 import HilltopAdsBanner from "../Adds/BannerAdd";
 import VideoSliderAd from "../Adds/VideoslideAdd";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function Home() {
-  const [postdata, setPostData] = useState([]);
+function Hijabi() {
+  const [Hijabi, setHijabi] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
 
   const fetchData = () => {
-    fetch(`${apiUrl}/getpostdata`, {
+    fetch(`${apiUrl}/getHijabi`, {
       mode: 'cors',
     })
       .then((res) => {
@@ -28,7 +27,8 @@ function Home() {
           ...item,
           views: item.views || 0  // Ensure views is initialized to 0 if not present
         }));
-        setPostData(reversedData);
+        console.log(reversedData);
+        setHijabi(reversedData);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -64,10 +64,10 @@ function Home() {
   };
 
   const handleCardClick = (id, currentViews) => {
-    const updatedPosts = postdata.map(item => 
+    const updatedPosts = Hijabi.map(item =>
       item._id === id ? { ...item, views: (currentViews || 0) + 1 } : item
     );
-    setPostData(updatedPosts);
+    setHijabi(updatedPosts);
 
     fetch(`${apiUrl}/updateviews/${id}`, {
       method: 'POST',
@@ -77,22 +77,22 @@ function Home() {
       },
       body: JSON.stringify({ views: (currentViews || 0) + 1 }),
     })
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error('Network response was not ok');
-      }
-      return res.json();
-    })
-    .then((data) => {
-      console.log('Views updated:', data);
-      fetchData();
-    })
-    .catch((error) => {
-      console.error('Error updating views:', error);
-    });
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log('Views updated:', data);
+        fetchData();
+      })
+      .catch((error) => {
+        console.error('Error updating views:', error);
+      });
   };
 
-  const filteredPosts = postdata.filter((item) => {
+  const filteredPosts = Hijabi.filter((item) => {
     const videoNoMatch = item.videoNo.toString().includes(searchTerm);
     const titelMatch = item.titel && item.titel.toLowerCase().includes(searchTerm.toLowerCase());
     return videoNoMatch || titelMatch;
@@ -124,29 +124,13 @@ function Home() {
     return pageNumbers;
   };
 
-  // useEffect(() => {
-  //   const script = document.createElement('script');
-  //   script.src = "//neat-period.com/b.XEVpsodzGPl/0VYRWLcJ/KeamI9JuvZUUUlVkpPsT/UR0xNOz/M/0/OrDKIltuN/TFQL3vMCznQW4OMLwt";
-  //   script.async = true;
-  //   script.referrerPolicy = 'no-referrer-when-downgrade';
-    
-  //   const existingScript = document.scripts[document.scripts.length - 1];
-  //   existingScript.parentNode.insertBefore(script, existingScript);
-
-  //   return () => {
-  //     if (script.parentNode) {
-  //       script.parentNode.removeChild(script);
-  //     }
-  //   };
-  // }, []);
-
   return (
     <>
-      <HilltopAdsBanner/>
-      <Navbar onSearch={handleSearch} />
 
+    <HilltopAdsBanner/>
+      <Navbar onSearch={handleSearch} />
+      <VideoSliderAd/>
       
-      <VideoSliderAd/> 
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {currentPosts.map((items) => (
@@ -156,7 +140,7 @@ function Home() {
                   <img src={items.imageUrl} className="card-img-top position-relative" alt="..." />
                   <p className="p-0 m-0 text-light">{items.titel}</p>
                   <div className="card-body">
-                    <h5 className="card-title">Video No: {items.videoNo}</h5>
+                    {/* <h5 className="card-title">Video No: {items.videoNo}</h5> */}
                     <span style={{ top: "5%", padding: "2px 8px", right: "3%" }} className="position-absolute views">
                       <i className="bi bi-clock"></i> {items.minutes} Min
                     </span>
@@ -179,9 +163,8 @@ function Home() {
           <button onClick={handleNextPage} className="nav-button">Next</button>
         )}
       </div>
-      <Footer />
     </>
   );
 }
 
-export default Home;
+export default Hijabi;

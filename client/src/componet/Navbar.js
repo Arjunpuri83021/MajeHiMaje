@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,10 +14,11 @@ export default function Navbar({ onSearch }) {
     <>
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
-          <a className="navbar-brand">
+          <Link to="/" className="navbar-brand">
             <img src="maje.png" alt="Maje logo" />
-          </a>
-          <form className="d-flex" role="search">
+          </Link>
+        <Link to="https://www.instagram.com/alexa_aubree_?igsh=dThyanpqcnIwdHp3&utm_source=qr"> <button className='btn btn-danger d-flex m-auto follow'>Follow Us</button></Link> 
+          <form className="d-flex mt-4" role="search">
             <div className="searchBar">
               <input
                 style={{ color: "#fff" }}
@@ -52,10 +53,10 @@ export default function Navbar({ onSearch }) {
         <NavLink to="/stars" activeClassName="active-link">
           <li>Stars</li>
         </NavLink>
-        <NavLink to="https://shallowgift.com/bH3FV.0NP/3RpGvabgmwVnJ/ZaD/0E1WN/Dsc/zANOT_A/w-LxTIUR0/Npz/Mv1/MBD/EN" activeClassName="active-link">
+        <NavLink to="/indian" activeClassName="active-link">
           <li>Indians</li>
         </NavLink>
-        <NavLink to="https://shallowgift.com/bH3FV.0NP/3RpGvabgmwVnJ/ZaD/0E1WN/Dsc/zANOT_A/w-LxTIUR0/Npz/Mv1/MBD/EN" activeClassName="active-link">
+        <NavLink to="/hijabi" activeClassName="active-link">
           <li>Hijabi</li>
         </NavLink>
       </ul>

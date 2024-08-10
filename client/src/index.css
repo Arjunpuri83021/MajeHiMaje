@@ -64,6 +64,10 @@
     color: #cd1f7c !important;
   }
 
+  .follow{
+    background-color: #cd1f7c;
+  }
+
   .card-title{
     color: #cd1f7c;
     font-size: 16px;
@@ -76,7 +80,7 @@
 
 .card{
   border: none;
-  border-bottom: solid 5px #494747;
+  border-bottom: solid 3px #f3f0f1;
 }
 
 .all-cards{

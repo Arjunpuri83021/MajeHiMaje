@@ -41,4 +41,8 @@ router.put('/updateStar/:starId', cAPi.updateStar); // Update star
 router.delete('/deleteStar/:starId', cAPi.deleteStar); // Delete star
 
 router.post('/updateviews/:id',cAPi.updateviews)
+
+
+router.get('/getindians',cAPi.getindians)
+router.get('/getHijabi' ,cAPi.getHijabi)
 module.exports = router
