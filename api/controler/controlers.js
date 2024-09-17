@@ -76,6 +76,9 @@ exports.updatepost = async (req, res) => {
 
   exports.addStar = async(req,res)=>{
     const {starUrl,starName,starLike,starImgUrl} = req.body
+  const StarCheack= await Stars.findOne({starName:starName})
+   console.log(StarCheack) 
+   if(StarCheack==null){
     const record= await new Stars({
       starurl:starUrl,
       starName:starName,
@@ -85,6 +88,13 @@ exports.updatepost = async (req, res) => {
      await record.save()
     //  console.log(record)
      res.json(record)
+
+    }
+    else{
+      res.json({
+        message:"Star Is allready Added"
+      })
+    }
   }
 
 

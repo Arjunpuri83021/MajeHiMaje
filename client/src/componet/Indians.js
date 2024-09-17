@@ -2,7 +2,9 @@ import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import { Link } from "react-router-dom";
 import HilltopAdsBanner from "../Adds/BannerAdd";
-import VideoSliderAd from "../Adds/VideoslideAdd";
+import VideoSliderAd from "../Adds/BannerAdd2";
+import BannerAd from "../Adds/BannerAdd";
+import { FaHandPointer } from 'react-icons/fa';
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -126,9 +128,9 @@ function Indians() {
 
   return (
     <>
-      <HilltopAdsBanner/>
+      
       <Navbar onSearch={handleSearch} />
-      <VideoSliderAd/>
+     
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {currentPosts.map((items) => (
@@ -136,14 +138,29 @@ function Indians() {
               <Link to={items.link}>
                 <div className="card">
                   <img src={items.imageUrl} className="card-img-top position-relative" alt="..." />
-                  <p className="p-0 m-0 text-light">{items.titel}</p>
+                 
+                 
+                 
+                  <div style={{width:"90%"}} className="d-flex justify-content-between mt-2 m-auto">
+                    <span className="views">
+                      <i className="bi bi-clock"></i> {items.minutes} Min
+                    </span>
+                    <span className="views">
+                      <i className="bi bi-eye-fill"></i> {items.views || 0}
+                    </span>
+                    </div>
+                
+                 
+                  <p className="p-0 m-0 text-light mt-2">{items.titel}</p>
                   <div className="card-body">
                     {/* <h5 className="card-title">Video No: {items.videoNo}</h5> */}
                     <span style={{ top: "5%", padding: "2px 8px", right: "3%" }} className="position-absolute views">
-                      <i className="bi bi-clock"></i> {items.minutes} Min
+                    <span style={{fontSize: '0.9rem', color: '#ffff' }}>HD</span>
+
+
                     </span>
-                    <span style={{ top: "5%", padding: "2px 8px", left: "3%" }} className="position-absolute views">
-                      <i className="bi bi-eye-fill"></i> {items.views || 0}
+                    <span style={{ top: "5%", padding: "7px 10px", left: "3%" ,borderRadius:"50%"}} className="position-absolute views">
+                    <FaHandPointer style={{ color: '#ffff', fontSize: '0.9rem' }} />
                     </span>
                   </div>
                 </div>

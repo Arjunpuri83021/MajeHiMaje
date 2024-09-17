@@ -3,7 +3,8 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
 import HilltopAdsBanner from "../Adds/BannerAdd";
-import VideoSliderAd from "../Adds/VideoslideAdd";
+import VideoSliderAd from "../Adds/BannerAdd2";
+import BannerAd from "../Adds/BannerAdd";
 const apiUrl = process.env.REACT_APP_API_URL;
 
 function Starts() {
@@ -87,33 +88,14 @@ function Starts() {
 
 
   
-  useEffect(() => {
-    // Create a script element
-    const script = document.createElement('script');
-    script.src = "//neat-period.com/b.XEVpsodzGPl/0VYRWLcJ/KeamI9JuvZUUUlVkpPsT/UR0xNOz/M/0/OrDKIltuN/TFQL3vMCznQW4OMLwt";
-    script.async = true;
-    script.referrerPolicy = 'no-referrer-when-downgrade';
-    
-    // Inject the script into the document
-    const existingScript = document.scripts[document.scripts.length - 1];
-    existingScript.parentNode.insertBefore(script, existingScript);
-
-    // Cleanup function to remove the script when the component unmounts
-    return () => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    };
-  }, []);
 
 
   return (
     <>
-    <HilltopAdsBanner/> 
+    
       <Navbar onSearch={handleSearch} />
-      {/* <iframe src="//a.magsrv.com/iframe.php?idzone=5371288&size=300x250" width="200" height="120" scrolling="no" marginwidth="0" marginheight="0" frameborder="0"></iframe> */}
-     
-    <VideoSliderAd/> 
+         
+   
      
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-2 row-cols-md-5 g-4">

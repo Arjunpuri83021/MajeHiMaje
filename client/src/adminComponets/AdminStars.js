@@ -29,15 +29,19 @@ function AdminStars() {
         throw new Error('Network response was not ok');
       }
 
-      await response.json();
+      const result = await response.json();
 
-      // Clear form fields after successful submission
-      setStarUrl('');
-      setStarName('');
-      setStarLike('');
-      setStarImgUrl('');
-      setIsUpdateMode(false);
-      fetchStars(); // Refresh the star list
+      if (result.message) {
+        alert(result.message);  // Notify if the star is already added
+      } else {
+        // Clear form fields after successful submission
+        setStarUrl('');
+        setStarName('');
+        setStarLike('');
+        setStarImgUrl('');
+        setIsUpdateMode(false);
+        fetchStars(); // Refresh the star list
+      }
     } catch (error) {
       console.error('Error adding star:', error);
     }
