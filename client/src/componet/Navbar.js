@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar({ onSearch }) {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [showSearchBar, setShowSearchBar] = useState(false); // Manage search bar visibility
   const [showNavMenu, setShowNavMenu] = useState(false); // Manage nav-ul visibility
 
@@ -15,8 +15,8 @@ export default function Navbar({ onSearch }) {
 
   // Clear the search bar when the cancel button is clicked
   const handleCancelSearch = () => {
-    setSearchQuery('');
-    onSearch(''); // Clear the search query
+    setSearchQuery("");
+    onSearch(""); // Clear the search query
   };
 
   // Toggle search bar visibility
@@ -35,27 +35,28 @@ export default function Navbar({ onSearch }) {
         <div className="container-fluid">
           {/* Logo */}
           <Link to="/" className="navbar-brand">
-           {/* Toggle Navigation Menu */}
-          
-           <i type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation" className="bi bi-list"></i>
+            {/* Toggle Navigation Menu */}
+
+            <i
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasNavbar"
+              aria-controls="offcanvasNavbar"
+              aria-label="Toggle navigation"
+              className="bi bi-list"
+            ></i>
             <img src="hexmy.png" alt="Maje logo" />
-             {/* Search Icon */}
-         
-             <i onClick={toggleSearchBar} className="bi bi-search"></i>
-          
+            {/* Search Icon */}
 
-         
-         
-
+            <i onClick={toggleSearchBar} className="bi bi-search"></i>
           </Link>
 
-         
           {/* Search Bar - Conditionally Rendered */}
           {showSearchBar && (
             <form className="d-flex mt-2" role="search">
               <div className="searchBar">
                 <input
-                  style={{ color: '#fff' }}
+                  style={{ color: "#fff" }}
                   value={searchQuery}
                   onChange={handleInputChange}
                   id="searchQueryInput"
@@ -92,50 +93,70 @@ export default function Navbar({ onSearch }) {
       </nav>
 
       {/* Nav Links - Conditionally Rendered based on toggle */}
-      
-        <ul className="nav-ul">
-          <NavLink exact to="/" activeClassName="active-link">
-            <li>All</li>
-          </NavLink>
-          <NavLink to="/stars" activeClassName="active-link">
-            <li>Stars</li>
-          </NavLink>
-          <NavLink to="/indian" activeClassName="active-link">
-            <li>Indians</li>
-          </NavLink>
-          <NavLink to="/hijabi" activeClassName="active-link">
-            <li>Hijabi</li>
-          </NavLink>
-        </ul>
-      
 
-<div className="offcanvas offcanvas-end w-50" tabIndex={-1} id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-  <div className="offcanvas-header d-flex justify-content-center">
-    <img style={{width:"50%"}} src="hexmy.png" alt="" />
-    <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
-  </div>
-  <div className="offcanvas-body">
-    <ul className="navbar-nav  justify-content-end flex-grow-1 pe-3">
-    <NavLink className="navbar-responsive" to="/" activeClassName="active-link">
-            <li>All</li>
-          </NavLink>
-          <NavLink className="navbar-responsive" to="/stars" activeClassName="active-link">
-            <li>Stars</li>
-          </NavLink>
-          <NavLink className="navbar-responsive" to="/indian" activeClassName="active-link">
-            <li>Indians</li>
-          </NavLink>
-          <NavLink className="navbar-responsive" to="/hijabi" activeClassName="active-link">
-            <li>Hijabi</li>
-          </NavLink>
-    </ul>
-  </div>
-</div>
+      <ul className="nav-ul">
+        <NavLink exact to="/" activeClassName="active-link">
+          <li>All</li>
+        </NavLink>
+        <NavLink to="/stars" activeClassName="active-link">
+          <li>Stars</li>
+        </NavLink>
+        <NavLink to="/indian" activeClassName="active-link">
+          <li>Indians</li>
+        </NavLink>
+        <NavLink to="/hijabi" activeClassName="active-link">
+          <li>Hijabi</li>
+        </NavLink>
+      </ul>
 
-
-
-
-      
+      <div
+        className="offcanvas offcanvas-end w-50"
+        tabIndex={-1}
+        id="offcanvasNavbar"
+        aria-labelledby="offcanvasNavbarLabel"
+      >
+        <div className="offcanvas-header d-flex justify-content-center">
+          <img style={{ width: "50%" }} src="hexmy.png" alt="" />
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          />
+        </div>
+        <div className="offcanvas-body">
+          <ul className="navbar-nav  justify-content-end flex-grow-1 pe-3">
+            <NavLink
+              className="navbar-responsive"
+              to="/"
+              activeClassName="active-link"
+            >
+              <li>All</li>
+            </NavLink>
+            <NavLink
+              className="navbar-responsive"
+              to="/stars"
+              activeClassName="active-link"
+            >
+              <li>Stars</li>
+            </NavLink>
+            <NavLink
+              className="navbar-responsive"
+              to="/indian"
+              activeClassName="active-link"
+            >
+              <li>Indians</li>
+            </NavLink>
+            <NavLink
+              className="navbar-responsive"
+              to="/hijabi"
+              activeClassName="active-link"
+            >
+              <li>Hijabi</li>
+            </NavLink>
+          </ul>
+        </div>
+      </div>
     </>
   );
 }
