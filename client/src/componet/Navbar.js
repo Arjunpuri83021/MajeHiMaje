@@ -29,27 +29,27 @@ export default function Navbar({ onSearch }) {
     setShowNavMenu(!showNavMenu);
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
+  };
   return (
     <>
       <nav className="navbar bg-body-tertiary">
         <div className="container-fluid">
           {/* Logo */}
-          <Link to="/" className="navbar-brand">
+          <span className="navbar-brand">
             {/* Toggle Navigation Menu */}
 
-            <i
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasNavbar"
-              aria-controls="offcanvasNavbar"
-              aria-label="Toggle navigation"
-              className="bi bi-list"
-            ></i>
-            <img src="hexmy.png" alt="Maje logo" />
+            <i onClick={toggleNavbar} className="bi bi-list"></i>
+            <Link to="/">
+              <img src="hexmy.png" alt="Maje logo" />
+            </Link>
             {/* Search Icon */}
 
             <i onClick={toggleSearchBar} className="bi bi-search"></i>
-          </Link>
+          </span>
 
           {/* Search Bar - Conditionally Rendered */}
           {showSearchBar && (
@@ -109,53 +109,24 @@ export default function Navbar({ onSearch }) {
         </NavLink>
       </ul>
 
-      <div
-        className="offcanvas offcanvas-end w-50"
-        tabIndex={-1}
-        id="offcanvasNavbar"
-        aria-labelledby="offcanvasNavbarLabel"
-      >
-        <div className="offcanvas-header d-flex justify-content-center">
-          <img style={{ width: "50%" }} src="hexmy.png" alt="" />
-          <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="offcanvas"
-            aria-label="Close"
-          />
-        </div>
-        <div className="offcanvas-body">
-          <ul className="navbar-nav  justify-content-end flex-grow-1 pe-3">
-            <NavLink
-              className="navbar-responsive"
-              to="/"
-              activeClassName="active-link"
-            >
-              <li>All</li>
-            </NavLink>
-            <NavLink
-              className="navbar-responsive"
-              to="/stars"
-              activeClassName="active-link"
-            >
-              <li>Stars</li>
-            </NavLink>
-            <NavLink
-              className="navbar-responsive"
-              to="/indian"
-              activeClassName="active-link"
-            >
-              <li>Indians</li>
-            </NavLink>
-            <NavLink
-              className="navbar-responsive"
-              to="/hijabi"
-              activeClassName="active-link"
-            >
-              <li>Hijabi</li>
-            </NavLink>
-          </ul>
-        </div>
+      <div className={`side-navbar ${isOpen ? "open" : ""}`}>
+        <button className="close-btn" onClick={toggleNavbar}>
+          <i className="bi bi-x-circle-fill"></i>
+        </button>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/stars">Stars</Link>
+          </li>
+          <li>
+            <Link to="/indian">Indians</Link>
+          </li>
+          <li>
+            <Link to="/hijabi">Hijabi</Link>
+          </li>
+        </ul>
       </div>
     </>
   );

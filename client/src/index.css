@@ -22,6 +22,98 @@
   width: 30%;
 }
 
+
+
+
+/* Basic layout */
+.side-navbar-container {
+  position: relative;
+  z-index: 999;
+  cursor: pointer;
+  /* Make sure the button is on top of other content */
+}
+
+/* Hamburger Button */
+.hamburger-btn {
+  font-size: 30px;
+  padding: 10px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 1001;
+  /* Higher z-index to ensure it shows above content */
+}
+
+/* Side Navbar */
+.side-navbar {
+  height: 100%;
+  width: 250px;
+  position: fixed;
+  /* Make it fixed to stay on top of the content */
+  top: 0;
+  left: -250px;
+  /* Hidden by default */
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  z-index: 1000;
+  /* Ensure it shows above other content */
+}
+
+.side-navbar.open {
+  left: 0;
+  /* Slide in from the left when open */
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  font-size: 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #cd1f7c !important;
+  outline: none;
+}
+
+/* Side Navbar Links */
+.side-navbar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.side-navbar ul li {
+  padding: 8px 16px;
+  text-align: left;
+}
+
+.side-navbar ul li a {
+  text-decoration: none;
+  color: #818181;
+  font-size: 18px;
+  display: block;
+  transition: 0.3s;
+}
+
+.side-navbar ul li a:hover {
+  color: #f1f1f1;
+}
+
+
+
+
+
+
+
+
+
 @media (max-width: 600px) {
   #ad-container {
     max-width: 100%;
