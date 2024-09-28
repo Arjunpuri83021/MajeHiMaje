@@ -162,7 +162,7 @@ const TopRate = () => {
                     </span>
                   </div>
 
-                  <h1 className="p-0 m-0 text-light mt-2">{items.titel} /Provided By: HexMy</h1>
+                  <h1 className="p-0 m-0 text-light mt-2">{items.name}-{items.titel} /Provided By: HexMy</h1>
                   <div className="card-body">
                     <h5 className="card-title">Video No: {items.videoNo}</h5>
                     <span

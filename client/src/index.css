@@ -15,6 +15,10 @@
   letter-spacing: 0.7px;
   font-weight: normal;
 }
+
+.card h1 span{
+  color: #cd1f7c;
+}
 .responsive-nabar li a{
   background-color: #202020;
   border-radius: 10px;
@@ -524,6 +528,10 @@
    }
   .nav-ul {
     display: none;
+  }
+
+  .admin-nav-ul{
+   display: flex !important;
   }
 
   .navbar-brand i {

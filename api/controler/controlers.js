@@ -3,12 +3,13 @@ const Stars = require('../model/Stars.model')
 
 
 exports.data = async (req, res) => {
-  console.log(req.body);
-  const { videoNo, views, link, imageUrl,titel,minutes,Category } = req.body;
+  // console.log(req.body);
+  const { videoNo, views, link, imageUrl,titel,minutes,Category ,name} = req.body;
 
   try {
     const record = new Data({
       imageUrl: imageUrl,
+      name:name,
       videoNo: videoNo,
       views: views,
       link: link,
@@ -50,12 +51,12 @@ exports.deletepost = async (req, res) => {
 
 exports.updatepost = async (req, res) => {
     const postId = req.params.postId;
-    const { videoNo, views, link, imageUrl ,titel,minutes,Category} = req.body;
+    const { videoNo, name, views, link, imageUrl ,titel,minutes,Category} = req.body;
   
     try {
       const updatedRecord = await Data.findByIdAndUpdate(
         postId,
-        { imageUrl, videoNo, views, link ,titel,minutes,Category},
+        { imageUrl, name, videoNo, views, link ,titel,minutes,Category},
         { new: true } // This option returns the modified document rather than the original.
       );
   

@@ -4,7 +4,7 @@ function AdminNav() {
     return ( 
 
         
-<ul className="nav-ul mt-5">
+<ul className="nav-ul admin-nav-ul mt-5">
         <NavLink exact to="/admin/aman" activeClassName="active-link">
           <li>Posts</li>
         </NavLink>

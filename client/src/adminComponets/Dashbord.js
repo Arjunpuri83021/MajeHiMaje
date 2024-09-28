@@ -5,13 +5,14 @@ const apiUrl = process.env.REACT_APP_API_URL;
 
 function Dashboard() {
   const [imageUrl, setImgUrl] = useState('');
+  const [name, setName] = useState('');
   const [videoNo, setVideoNo] = useState('');
   const [views, setViews] = useState('');
   const [link, setLink] = useState('');
   const [titel, settitel] = useState('');
   const [minutes,setMinutes] = useState('')
   const [Category,setCategory]=useState('')
-
+  
   const [postdata, setData] = useState([]);
   const [postId, setPostId] = useState('');
   const [isUpdateMode, setIsUpdateMode] = useState(false);
@@ -22,7 +23,7 @@ function Dashboard() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const formData = { imageUrl, videoNo, views, link, titel,minutes,Category};
+    const formData = { imageUrl,name, videoNo, views, link, titel,minutes,Category};
 
     const url = isUpdateMode
       ? `${apiUrl}/updatepost/${postId}`
@@ -101,6 +102,7 @@ function Dashboard() {
     setIsUpdateMode(true);
     setPostId(item._id);
     setImgUrl(item.imageUrl);
+    setName(item.name)
     setVideoNo(item.videoNo);
     setViews(item.views);
     setLink(item.link);
@@ -126,6 +128,7 @@ function Dashboard() {
 
   const resetForm = () => {
     setImgUrl('');
+    setName('')
     setVideoNo('');
     setViews('');
     setLink('');
@@ -177,7 +180,7 @@ function Dashboard() {
 
       
 
-      <div className="all-cards">
+      <div style={{marginTop:"7%"}} className="all-cards">
         <div className="row row-cols-2 row-cols-md-5 g-4">
           {currentPosts.map((item) => (
             <div className="col" key={item._id}>
@@ -224,6 +227,8 @@ function Dashboard() {
             <div className="modal-body">
               <label htmlFor="image">Image Url</label>
               <input value={imageUrl} onChange={(e) => setImgUrl(e.target.value)} className="form-control" type="text" name="imageUrl" id="image" />
+              <label htmlFor="image">Star Name</label>
+              <input value={name} onChange={(e) => setName(e.target.value)} className="form-control" type="text" name="imageUrl" id="image" />
               <label htmlFor="image">Titel</label>
               <input value={titel} onChange={(e) => settitel(e.target.value)} className="form-control" type="text" name="imageUrl" id="image" />
               <label htmlFor="videoNo">Video No.</label>
