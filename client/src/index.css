@@ -4,7 +4,45 @@
   text-decoration: none !important;
 }
 
+.responsive-nabar li{
+  background-color: #111 !important;
+  
+  
+}
 
+.card h1{
+  font-size: 13px;
+  letter-spacing: 0.7px;
+  font-weight: normal;
+}
+.responsive-nabar li a{
+  background-color: #202020;
+  border-radius: 10px;
+  color: #cd1f7c !important;
+  text-transform: capitalize;
+  font-weight: 500;
+  margin-top: 10px;
+  padding-left: 30px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  padding: 5px;
+}
+
+.responsive-nabar li a i{
+  background-color: #202020;
+  padding: 5px;
+ 
+}
+
+
+
+
+
+
+
+.bi-x-circle-fill{
+  background-color: transparent;
+  
+}
 #ad-container iframe {
   width: 100% !important;
   /* Ensures iframe scales within container */
@@ -19,7 +57,8 @@
 }
 
 .navbar-brand img {
-  width: 30%;
+  width: 40%;
+  margin-top: 10px;
 }
 
 
@@ -119,6 +158,10 @@
     max-width: 100%;
     /* Adjusts max width for smaller screens */
   }
+  .dekstop-search-bar{
+    display: none !important;
+  }
+  
 
   #ad-container iframe {
     height: auto;
@@ -144,6 +187,39 @@
   display: flex;
   justify-content: center;
 }
+
+/* Navbar Styles */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  transition: transform 0.3s;
+  transform: translateY(0); /* Default position */
+  z-index: 1000; /* Ensure it stays above other content */
+}
+
+.navbar.hidden {
+  transform: translateY(-100%); /* Move it off-screen */
+}
+
+/* Side Navbar Styles */
+.side-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 250px; /* Adjust based on your desired sidebar width */
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  background-color: #111; /* Adjust based on your design */
+}
+
+.side-navbar.open {
+  transform: translateX(0);
+}
+
+/* Additional Styles for Responsive Design */
+
 
 .wrapper {
   width: 100%;
@@ -332,6 +408,10 @@
   text-decoration: underline;
 }
 
+.all-cards{
+ margin-top: 10%;
+}
+
 .footer-section img {
   max-width: 100%;
   /* Ensure images resize responsively */
@@ -374,9 +454,7 @@
 }
 
 
-.navbar-brand i {
-  display: none;
-}
+
 
 
 .navbar-responsive {
@@ -392,6 +470,45 @@
   text-align: center;
 }
 
+.sidenav-logo{
+  width: 40%;
+  background-color: #111;
+  margin-left: 10px;
+}
+.close-btn{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.navbar-brand {
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  justify-content: space-between;
+}
+
+.navbar-brand i {
+  color: #ffff;
+  font-size: 30px;
+  display: block;
+}
+
+.navbar-brand h1{
+  color: #ffff;
+  font-family: "Rubik Mono One", monospace;
+  font-weight: 600;
+  font-style: normal;
+ 
+}
+
+.navbar-brand h1 span{
+  color: #cd1f7c;
+}
+
+
 @media(max-width:650px) {
   .navbar-brand {
     width: 100%;
@@ -402,6 +519,9 @@
     justify-content: space-between;
   }
 
+  .all-cards{
+    margin-top: 20%;
+   }
   .nav-ul {
     display: none;
   }
@@ -447,8 +567,10 @@
     padding: 5px 0px;
   }
 
-  .card p {
+  .card h1 {
     font-size: 13px;
+    letter-spacing: 0.7px;
+    font-weight: normal;
   }
 
   .card h5 {

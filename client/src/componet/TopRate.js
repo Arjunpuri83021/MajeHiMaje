@@ -2,14 +2,13 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
-import BannerAd from "../Adds/BannerAdd";
 import { FaHandPointer } from "react-icons/fa";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function Home() {
+const TopRate = () => {
   const [postdata, setPostData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(""); // Added state for search term
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 16;
 
@@ -38,30 +37,6 @@ function Home() {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo(0, 0);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo(0, 0);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo(0, 0);
-    }
-  };
 
   const handleCardClick = (id, currentViews) => {
     const updatedPosts = postdata.map((item) =>
@@ -92,19 +67,41 @@ function Home() {
       });
   };
 
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setCurrentPage(1); // Reset to the first page on new search
+  };
+
+  // Filter posts with more than 100 views and match the search term
   const filteredPosts = postdata.filter((item) => {
     const videoNoMatch = item.videoNo.toString().includes(searchTerm);
     const titelMatch =
       item.titel && item.titel.toLowerCase().includes(searchTerm.toLowerCase());
-    return videoNoMatch || titelMatch;
+    return item.views > 100 && (videoNoMatch || titelMatch);
   });
 
   const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentPosts = filteredPosts.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const currentPosts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const renderPageNumbers = () => {
     let pageNumbers = [];
@@ -134,8 +131,9 @@ function Home() {
 
   return (
     <>
+      {/* Pass handleSearch to Navbar for search functionality */}
       <Navbar onSearch={handleSearch} />
-
+      <h1>Top Rated Videos</h1>
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {currentPosts.map((items) => (
@@ -150,7 +148,6 @@ function Home() {
                     src={items.imageUrl}
                     className="card-img-top position-relative"
                     alt={items.titel}
-
                   />
 
                   <div
@@ -212,6 +209,6 @@ function Home() {
       <Footer />
     </>
   );
-}
+};
 
-export default Home;
+export default TopRate;

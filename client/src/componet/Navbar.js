@@ -1,22 +1,36 @@
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 export default function Navbar({ onSearch }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [showSearchBar, setShowSearchBar] = useState(false); // Manage search bar visibility
-  const [showNavMenu, setShowNavMenu] = useState(false); // Manage nav-ul visibility
+  const [showSearchBar, setShowSearchBar] = useState(false);
+  const [showNavMenu, setShowNavMenu] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isNavbarVisible, setIsNavbarVisible] = useState(true);
 
-  // Handle the input change for the search bar
+  const sideNavbarRef = useRef(null);
+  const searchDebounceTimeout = useRef(null); // To hold the debounce timer
+
+  // Handle the input change for the search bar with manual debounce
   const handleInputChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
-    onSearch(query);
+
+    // Clear the previous debounce timer
+    if (searchDebounceTimeout.current) {
+      clearTimeout(searchDebounceTimeout.current);
+    }
+
+    // Set a new debounce timer
+    searchDebounceTimeout.current = setTimeout(() => {
+      onSearch(query); // Trigger search after debounce delay
+    }, 300); // 300ms debounce delay
   };
 
   // Clear the search bar when the cancel button is clicked
   const handleCancelSearch = () => {
     setSearchQuery("");
-    onSearch(""); // Clear the search query
+    onSearch(""); // Trigger search with empty query
   };
 
   // Toggle search bar visibility
@@ -29,29 +43,47 @@ export default function Navbar({ onSearch }) {
     setShowNavMenu(!showNavMenu);
   };
 
-  const [isOpen, setIsOpen] = useState(false);
+  // Toggle navbar visibility on scroll
+  useEffect(() => {
+    let lastScrollTop = 0;
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setIsNavbarVisible(scrollTop < lastScrollTop || scrollTop < 100);
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Close sidebar when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sideNavbarRef.current && !sideNavbarRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const toggleNavbar = () => {
     setIsOpen(!isOpen);
   };
+
   return (
     <>
-      <nav className="navbar bg-body-tertiary">
+      <nav className={`navbar bg-body-tertiary ${isNavbarVisible ? '' : 'hidden'}`}>
         <div className="container-fluid">
-          {/* Logo */}
           <span className="navbar-brand">
-            {/* Toggle Navigation Menu */}
-
             <i onClick={toggleNavbar} className="bi bi-list"></i>
             <Link to="/">
               <img src="hexmy.png" alt="Maje logo" />
             </Link>
-            {/* Search Icon */}
-
             <i onClick={toggleSearchBar} className="bi bi-search"></i>
           </span>
 
-          {/* Search Bar - Conditionally Rendered */}
           {showSearchBar && (
             <form className="d-flex mt-2" role="search">
               <div className="searchBar">
@@ -80,8 +112,7 @@ export default function Navbar({ onSearch }) {
                   ) : (
                     <svg style={{ width: 24, height: 24 }} viewBox="0 0 24 24">
                       <path
-                        fill="#666666"
-                        d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"
+                        d="" // Empty path removed or updated as necessary
                       />
                     </svg>
                   )}
@@ -92,39 +123,53 @@ export default function Navbar({ onSearch }) {
         </div>
       </nav>
 
-      {/* Nav Links - Conditionally Rendered based on toggle */}
-
-      <ul className="nav-ul">
-        <NavLink exact to="/" activeClassName="active-link">
-          <li>All</li>
-        </NavLink>
-        <NavLink to="/stars" activeClassName="active-link">
-          <li>Stars</li>
-        </NavLink>
-        <NavLink to="/indian" activeClassName="active-link">
-          <li>Indians</li>
-        </NavLink>
-        <NavLink to="/hijabi" activeClassName="active-link">
-          <li>Hijabi</li>
-        </NavLink>
-      </ul>
-
-      <div className={`side-navbar ${isOpen ? "open" : ""}`}>
+      <div className={`side-navbar ${isOpen ? "open" : ""}`} ref={sideNavbarRef}>
         <button className="close-btn" onClick={toggleNavbar}>
+          <img className="sidenav-logo" src="hexmy.png" alt="" />
           <i className="bi bi-x-circle-fill"></i>
         </button>
-        <ul>
+
+        <ul className="responsive-nabar">
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/">
+              <i className="bi bi-house"></i> Home
+            </Link>
           </li>
           <li>
-            <Link to="/stars">Stars</Link>
+            <Link to="/stars">
+              <i className="bi bi-star"></i> Stars
+            </Link>
           </li>
           <li>
-            <Link to="/indian">Indians</Link>
+            <Link to="/indian">
+              <i className="bi bi-emoji-kiss"></i> Indians
+            </Link>
           </li>
           <li>
-            <Link to="/hijabi">Hijabi</Link>
+            <Link to="/hijabi">
+              <i className="bi bi-heart-pulse"></i> Hijabi
+            </Link>
+          </li>
+          <li>
+            <Link to="/popularVideos">
+              <i className="bi bi-fire"></i> Popular videos
+            </Link>
+          </li>
+          <li>
+            <Link to="/newVideos">
+              <i className="bi bi-clock"></i> New videos
+            </Link>
+          </li>
+          <li>
+            <Link to="/toprated">
+              <i className="bi bi-heart"></i> Top rated videos
+            </Link>
+          </li>
+
+          <li>
+            <Link to="https://www.instagram.com/direct_hd_link/?utm_source=qr&igsh=eDJtaWEyNmF6OTJy">
+              <i className="bi bi-hand-thumbs-up-fill"></i> Follow Us
+            </Link>
           </li>
         </ul>
       </div>

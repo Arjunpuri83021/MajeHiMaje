@@ -14,6 +14,9 @@ import Indians from './componet/Indians';
 
 import { SearchProvider } from './SearchContext';
 import Hijabi from './componet/Hijabi';
+import Popular from './componet/Popular';
+import NewVideos from './componet/NewVideos';
+import TopRate from './componet/TopRate';
 
 function App() {
   
@@ -34,8 +37,9 @@ function App() {
       <Route path='/stars' element={<Starts/>}></Route>
       <Route path='/indian' element={<Indians/>}></Route>
        <Route path='/hijabi' element={<Hijabi/>}></Route>
-
-
+      <Route path='/popularVideos' element={<Popular/>}></Route>
+      <Route path='/newVideos' element={<NewVideos/>}></Route>
+       <Route path='/toprated' element={<TopRate/>}></Route>
      {/* admin componets */}
      <Route path='/admin/aman' element={<Dashbord/>}></Route>
      <Route path='/admin/stars' element={<AdminStars/>}></Route>

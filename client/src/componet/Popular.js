@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { useEffect, useState } from "react";
 import Footer from "./Footer";
-import BannerAd from "../Adds/BannerAdd";
 import { FaHandPointer } from "react-icons/fa";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-function Home() {
+const Popular = () => {
   const [postdata, setPostData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,30 +38,7 @@ function Home() {
     fetchData();
   }, []);
 
-  const handleSearch = (term) => {
-    setSearchTerm(term);
-    setCurrentPage(1);
-  };
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    window.scrollTo(0, 0);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo(0, 0);
-    }
-  };
-
-  const handlePreviousPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo(0, 0);
-    }
-  };
-
+  // Handle card click to update views
   const handleCardClick = (id, currentViews) => {
     const updatedPosts = postdata.map((item) =>
       item._id === id ? { ...item, views: (currentViews || 0) + 1 } : item
@@ -92,19 +68,43 @@ function Home() {
       });
   };
 
+  // Handle search input
+  const handleSearch = (term) => {
+    setSearchTerm(term);
+    setCurrentPage(1);
+  };
+
+  // Filter posts by views and search term
   const filteredPosts = postdata.filter((item) => {
     const videoNoMatch = item.videoNo.toString().includes(searchTerm);
-    const titelMatch =
+    const titleMatch =
       item.titel && item.titel.toLowerCase().includes(searchTerm.toLowerCase());
-    return videoNoMatch || titelMatch;
+    return (videoNoMatch || titleMatch) && item.views > 40;
   });
 
+  // Pagination logic
   const totalPages = Math.ceil(filteredPosts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentPosts = filteredPosts.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const currentPosts = filteredPosts.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo(0, 0);
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
   const renderPageNumbers = () => {
     let pageNumbers = [];
@@ -134,8 +134,9 @@ function Home() {
 
   return (
     <>
+      {/* Pass handleSearch to Navbar for search functionality */}
       <Navbar onSearch={handleSearch} />
-
+      <h1>Popular Videos</h1>
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-1 row-cols-md-5 g-4">
           {currentPosts.map((items) => (
@@ -150,9 +151,7 @@ function Home() {
                     src={items.imageUrl}
                     className="card-img-top position-relative"
                     alt={items.titel}
-
                   />
-
                   <div
                     style={{ width: "90%" }}
                     className="d-flex justify-content-between mt-2 m-auto"
@@ -164,7 +163,6 @@ function Home() {
                       <i className="bi bi-eye-fill"></i> {items.views || 0}
                     </span>
                   </div>
-
                   <h1 className="p-0 m-0 text-light mt-2">{items.titel} /Provided By: HexMy</h1>
                   <div className="card-body">
                     <h5 className="card-title">Video No: {items.videoNo}</h5>
@@ -212,6 +210,6 @@ function Home() {
       <Footer />
     </>
   );
-}
+};
 
-export default Home;
+export default Popular;
