@@ -1,49 +1,77 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
-export default function Navbar({ onSearch }) {
+export default function Navbar({ onSearch, postdata }) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [showNavMenu, setShowNavMenu] = useState(false);
+  const [showSearchBar, setShowSearchBar] = useState(false); // State for search bar visibility
   const [isOpen, setIsOpen] = useState(false);
   const [isNavbarVisible, setIsNavbarVisible] = useState(true);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [hideStaticSuggestions, setHideStaticSuggestions] = useState(false); // Hide static suggestions when needed
 
-  const sideNavbarRef = useRef(null);
-  const searchDebounceTimeout = useRef(null); // To hold the debounce timer
+  const searchBarRef = useRef(null);
+  const searchDebounceTimeout = useRef(null);
 
-  // Handle the input change for the search bar with manual debounce
+  const staticSearchTerms = ["indian", "sister", "MILF", "Family","mom","japanese"];
+
+  // Handle input change and filter suggestions
   const handleInputChange = (e) => {
     const query = e.target.value;
     setSearchQuery(query);
+    setHideStaticSuggestions(true); // Hide static suggestions when typing
 
-    // Clear the previous debounce timer
     if (searchDebounceTimeout.current) {
       clearTimeout(searchDebounceTimeout.current);
     }
 
-    // Set a new debounce timer
     searchDebounceTimeout.current = setTimeout(() => {
-      onSearch(query); // Trigger search after debounce delay
-    }, 300); // 300ms debounce delay
+      filterSuggestions(query);
+    }, 300);
   };
 
-  // Clear the search bar when the cancel button is clicked
-  const handleCancelSearch = () => {
-    setSearchQuery("");
-    onSearch(""); // Trigger search with empty query
+  // Filter suggestions based on the input
+  const filterSuggestions = (query) => {
+    if (!query) {
+      setFilteredSuggestions([]);
+      return;
+    }
+
+    const filtered = postdata
+      .filter(
+        (item) =>
+          (item.name && item.name.toLowerCase().includes(query.toLowerCase())) ||
+          (item.title && item.title.toLowerCase().includes(query.toLowerCase()))
+      )
+      .slice(0, 15);
+
+    setFilteredSuggestions(filtered);
   };
 
   // Toggle search bar visibility
   const toggleSearchBar = () => {
-    setShowSearchBar(!showSearchBar);
+    setShowSearchBar((prev) => !prev); // Toggle the search bar visibility
+    setSearchQuery(""); // Clear search input on toggle
+    setFilteredSuggestions([]); // Clear suggestions on toggle
+    setHideStaticSuggestions(false); // Show static suggestions when search bar is toggled open
   };
 
-  // Toggle navigation menu visibility
-  const toggleNavMenu = () => {
-    setShowNavMenu(!showNavMenu);
+  // Handle suggestion click
+  const handleSuggestionClick = (term) => {
+    setSearchQuery(term);
+    setFilteredSuggestions([]); // Clear filtered suggestions after clicking
+    setHideStaticSuggestions(true); // Hide static suggestions after clicking
+    onSearch(term); // Trigger search
   };
 
-  // Toggle navbar visibility on scroll
+  // Cancel search action
+  const handleCancelSearch = () => {
+    setSearchQuery("");
+    onSearch("");
+    setFilteredSuggestions([]);
+    setHideStaticSuggestions(false); // Show static suggestions when search is cleared
+  };
+
+  // Handle navbar scroll visibility
   useEffect(() => {
     let lastScrollTop = 0;
     const handleScroll = () => {
@@ -56,36 +84,20 @@ export default function Navbar({ onSearch }) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close sidebar when clicking outside of it
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sideNavbarRef.current && !sideNavbarRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const toggleNavbar = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
     <>
-      <nav className={`navbar bg-body-tertiary ${isNavbarVisible ? '' : 'hidden'}`}>
+      <nav className={`navbar bg-body-tertiary ${isNavbarVisible ? "" : "hidden"}`}>
         <div className="container-fluid">
           <span className="navbar-brand">
-            <i onClick={toggleNavbar} className="bi bi-list"></i>
+            <i onClick={() => setIsOpen(!isOpen)} className="bi bi-list"></i>
             <Link to="/">
               <img src="hexmy.png" alt="Maje logo" />
             </Link>
-            <i onClick={toggleSearchBar} className="bi bi-search"></i>
+            <i onClick={toggleSearchBar} className="bi bi-search"></i> {/* Toggling Search Bar */}
           </span>
 
           {showSearchBar && (
-            <form className="d-flex mt-2" role="search">
+            <form className="d-flex mt-2 position-relative" role="search" ref={searchBarRef}>
               <div className="searchBar">
                 <input
                   style={{ color: "#fff" }}
@@ -100,7 +112,7 @@ export default function Navbar({ onSearch }) {
                   id="searchQuerySubmit"
                   type="button"
                   name="searchQuerySubmit"
-                  onClick={searchQuery ? handleCancelSearch : null}
+                  onClick={handleCancelSearch}
                 >
                   {searchQuery ? (
                     <svg style={{ width: 24, height: 24 }} viewBox="0 0 24 24">
@@ -111,20 +123,46 @@ export default function Navbar({ onSearch }) {
                     </svg>
                   ) : (
                     <svg style={{ width: 24, height: 24 }} viewBox="0 0 24 24">
-                      <path
-                        d="" // Empty path removed or updated as necessary
-                      />
+                      <path d="" />
                     </svg>
                   )}
                 </button>
               </div>
+
+              {/* Show Static Suggestions if there are no dynamic suggestions */}
+              {!hideStaticSuggestions && (
+                <div className="suggestions-box">
+                  <ul>
+                    
+                     <span className="group-title">Popular searches</span>
+                    {staticSearchTerms.map((term) => (
+                      <li key={term} onClick={() => handleSuggestionClick(term)}>
+                        {term}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Show Dynamic Suggestions */}
+              {filteredSuggestions.length > 0 && (
+                <div className="suggestions-box">
+                  <ul>
+                    {filteredSuggestions.map((item) => (
+                      <li key={item._id} onClick={() => handleSuggestionClick(item.name)}>
+                        {item.name} - {item.title}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </form>
           )}
         </div>
       </nav>
 
-      <div className={`side-navbar ${isOpen ? "open" : ""}`} ref={sideNavbarRef}>
-        <button className="close-btn" onClick={toggleNavbar}>
+      <div className={`side-navbar ${isOpen ? "open" : ""}`}>
+        <button className="close-btn" onClick={() => setIsOpen(!isOpen)}>
           <img className="sidenav-logo" src="hexmy.png" alt="" />
           <i className="bi bi-x-circle-fill"></i>
         </button>
@@ -165,7 +203,6 @@ export default function Navbar({ onSearch }) {
               <i className="bi bi-heart"></i> Top rated videos
             </Link>
           </li>
-
           <li>
             <Link to="https://www.instagram.com/direct_hd_link/?utm_source=qr&igsh=eDJtaWEyNmF6OTJy">
               <i className="bi bi-hand-thumbs-up-fill"></i> Follow Us

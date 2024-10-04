@@ -134,7 +134,7 @@ function Home() {
 
   return (
     <>
-      <Navbar onSearch={handleSearch} />
+      <Navbar onSearch={handleSearch} postdata={postdata}/>
 
       <div id="ad-container" className="all-cards">
         <div className="row row-cols-1 row-cols-md-5 g-4">
